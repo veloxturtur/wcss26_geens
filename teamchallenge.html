@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Challenge — Geens World Cup Sweepstake</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="leaderboard.html" class="brand">
+        <span class="brand-icon">🏆</span>
+        <span>GEENS WORLD CUP SWEEPSTAKE</span>
+      </a>
+      <nav id="main-nav" aria-label="Main navigation"></nav>
+    </div>
+  </header>
+
+  <main>
+    <header class="page-header">
+      <h1>TEAM CHALLENGE</h1>
+      <p class="sync-status" id="sync-status" aria-live="polite"></p>
+    </header>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Members</th>
+            <th>Average Points</th>
+          </tr>
+        </thead>
+        <tbody id="team-challenge-body"></tbody>
+      </table>
+    </div>
+    <p class="footer-note">Team scores are calculated by averaging the points of all team members.</p>
+  </main>
+
+  <script src="fixtures.js"></script>
+  <script src="data.js"></script>
+  <script src="store.js"></script>
+  <script src="api-sync.js"></script>
+  <script src="common.js"></script>
+  <script src="teamchallenge.js"></script>
+</body>
+</html>
