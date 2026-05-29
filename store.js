@@ -15,7 +15,7 @@ const HARD_CODED_PLAYER_INPUT = [
 { name: 'Peet', teams: ['Colombia', 'Ecuador', 'Spain'] },
 { name: 'Pie', teams: ['Uruguay', 'USA', 'Spain'] },
 { name: 'Sara', teams: ['Brazil', 'Haiti', 'Spain'] },
-{ name: 'Stan', teams: ['Brazil', 'Honduras', 'Haiti'] },
+{ name: 'Stan', teams: ['Brazil', 'Netherlands', 'Haiti'] },
 { name: 'Stella', teams: ['Argentina', 'Haiti', 'Spain'] },
 { name: 'Teo', teams: ['New Zealand', 'Australia', 'Spain'] },
 ];
