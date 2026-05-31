@@ -26,7 +26,7 @@ const TEAMS = /** @type {Team[]} */ ([
   { code: 'ECU', name: 'Ecuador', fifaRank: 23, confederation: 'CONMEBOL' },
   { code: 'AUS', name: 'Australia', fifaRank: 24, confederation: 'AFC' },
   { code: 'AUT', name: 'Austria', fifaRank: 27, confederation: 'UEFA' },
-  { code: 'COD', name: 'DR Congo', fifaRank: 28, confederation: 'UEFA' },
+  { code: 'COD', name: 'DR Congo', fifaRank: 28, confederation: 'CAF' },
   { code: 'QAT', name: 'Qatar', fifaRank: 35, confederation: 'AFC' },
   { code: 'CAN', name: 'Canada', fifaRank: 48, confederation: 'CONCACAF' },
 ]);
