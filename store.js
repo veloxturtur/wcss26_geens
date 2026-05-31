@@ -6,7 +6,7 @@ const STORAGE_KEY = 'wcSweepstake_v2';
 const HARD_CODED_PLAYER_INPUT = [
  { name: 'Evi', teams: ['Portugal', 'Sweden', 'Uzbekistan'] },
  { name: 'Jasper', teams: ['Mexico', 'Côte d\'Ivoire', 'Saudi Arabia'] },
- { name: 'Jurgen', teams: ['Columbia', 'Panama', 'Bosnia and Herzegovina'] },
+ { name: 'Jurgen', teams: ['Colombia', 'Panama', 'Bosnia and Herzegovina'] },
  { name: 'Lien', teams: ['Germany', 'Canada', 'Iraq', 'Switzerland'] },
  { name: 'Noah', teams: ['Belgium', 'Algeria', 'Qatar'] },
  { name: 'Oma', teams: ['Croatia', 'Australia', 'Ghana', 'Japan'] },
