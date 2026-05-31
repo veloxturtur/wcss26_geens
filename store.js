@@ -4,20 +4,20 @@ const STORAGE_KEY = 'wcSweepstake_v2';
 // Use FULL COUNTRY NAMES only (e.g. "England", "Netherlands").
 // 3-letter codes like "ENG"/"NED" are rejected.
 const HARD_CODED_PLAYER_INPUT = [
-  { name: 'Evi', teams: ['Brazil', 'France', 'Belgium'] },
-{ name: 'Jasper', teams: ['Brazil', 'Netherlands', 'Portugal'] },
-{ name: 'Jurgen', teams: ['Argentina', 'England', 'Germany'] },
-{ name: 'Lien', teams: ['France', 'Germany', 'Netherlands'] },
-{ name: 'Noah', teams: ['Brazil', 'Spain', 'Netherlands'] },
-{ name: 'Oma', teams: ['Netherlands', 'Portugal', 'Spain'] },
-{ name: 'Opa', teams: ['USA', 'Japan', 'Morocco'] },
-{ name: 'Oscar', teams: ['Morocco', 'Senegal', 'Spain'] },
-{ name: 'Peet', teams: ['Colombia', 'Ecuador', 'Spain'] },
-{ name: 'Pie', teams: ['Uruguay', 'USA', 'Spain'] },
-{ name: 'Sara', teams: ['Brazil', 'Haiti', 'Spain'] },
-{ name: 'Stan', teams: ['Brazil', 'Netherlands', 'Haiti'] },
-{ name: 'Stella', teams: ['Argentina', 'Haiti', 'Spain'] },
-{ name: 'Teo', teams: ['New Zealand', 'Australia', 'Spain'] },
+ { name: 'Evi', teams: ['Portugal', 'Sweden', 'Uzbekistan'] },
+ { name: 'Jasper', teams: ['Mexico', 'Côte d\'Ivoire', 'Saudi Arabia'] },
+ { name: 'Jurgen', teams: ['Columbia', 'Panama', 'Bosnia and Herzegovina'] },
+ { name: 'Lien', teams: ['Germany', 'Canada', 'Iraq'] },
+ { name: 'Noah', teams: ['Belgium', 'Algeria', 'Qatar'] },
+ { name: 'Oma', teams: ['Croatia', 'Australia', 'Ghana'] },
+ { name: 'Opa', teams: ['Argentina', 'Scotland', 'DR Congo'] },
+ { name: 'Oscar', teams: ['Brazil', 'Egypt', 'New Zealand'] },
+ { name: 'Peet', teams: ['Jordan', 'Paraguay', 'Senegal'] },
+ { name: 'Pie', teams: ['France', 'Czechia', 'Tunisia'] },
+ { name: 'Sara', teams: ['Netherlands', 'Austria', 'South Africa'] },
+ { name: 'Stan', teams: ['England', 'Venezuela', 'Haiti'] },
+ { name: 'Stella', teams: ['Morocco', 'South Korea', 'Cabo Verde'] },
+ { name: 'Teo', teams: ['Spain', 'Norway', 'Curaçao'] },
 ];
 
 // Internal normalized version used by the app: { name, teamCodes: string[] }.
