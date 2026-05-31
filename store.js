@@ -4,7 +4,7 @@ const STORAGE_KEY = 'wcSweepstake_v2';
 // Use FULL COUNTRY NAMES only (e.g. "England", "Netherlands").
 // 3-letter codes like "ENG"/"NED" are rejected.
 const HARD_CODED_PLAYER_INPUT = [
-  { name: 'Evi', teams: ['Brazil', 'France', 'Netherlands'] },
+  { name: 'Evi', teams: ['Brazil', 'France', 'Belgium'] },
 { name: 'Jasper', teams: ['Brazil', 'Netherlands', 'Portugal'] },
 { name: 'Jurgen', teams: ['Argentina', 'England', 'Germany'] },
 { name: 'Lien', teams: ['France', 'Germany', 'Netherlands'] },
