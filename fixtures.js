@@ -219,3 +219,9 @@ function getMatchDates(matches) {
   dates.sort();
   return dates;
 }
+
+function getAllTournamentTeamCodes() {
+  const codes = new Set();
+  Object.values(WC2026_GROUPS).forEach((g) => g.forEach((c) => codes.add(c)));
+  return [...codes];
+}
