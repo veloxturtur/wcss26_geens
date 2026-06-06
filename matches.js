@@ -1,3 +1,5 @@
+let showAllUpcoming = false;
+
 function matchStageLabel(m) {
   if (m.stage === 'group') return `Group ${m.group}`;
   return m.label || KNOCKOUT_STAGE_LABELS[m.stage] || m.stage;
@@ -7,26 +9,27 @@ function renderMatchRow(m) {
   const state = loadState();
   const homePlayer = m.home ? getPlayerByTeamCode(state, m.home) : null;
   const awayPlayer = m.away ? getPlayerByTeamCode(state, m.away) : null;
-  
+
   const home = m.home ? renderTeamCell(m.home) : '<span class="team-unknown">TBD</span>';
   const away = m.away ? renderTeamCell(m.away) : '<span class="team-unknown">TBD</span>';
-  
-  const homeWithPlayer = homePlayer 
-    ? `${home}<span class="team-player">${homePlayer}</span>` 
+
+  const homeWithPlayer = homePlayer
+    ? `${home}<span class="team-player">${homePlayer}</span>`
     : home;
-  const awayWithPlayer = awayPlayer 
-    ? `${away}<span class="team-player">${awayPlayer}</span>` 
+  const awayWithPlayer = awayPlayer
+    ? `${away}<span class="team-player">${awayPlayer}</span>`
     : away;
-  
+
   const score =
     m.played && m.homeScore != null
       ? `<span class="match-score">${m.homeScore} – ${m.awayScore}</span>`
       : '<span class="match-score match-score-pending">vs</span>';
-  const live = !m.played && m.date === new Date().toISOString().slice(0, 10);
+  const today = getLocalDateString();
+  const live = !m.played && matchLocalDate(m) === today;
   return `
     <article class="match-card ${m.played ? 'match-finished' : ''} ${live ? 'match-live' : ''}">
       <div class="match-card-meta">
-        <span class="match-date">${formatDate(m.date)}</span>
+        <span class="match-date">${formatMatchDateTime(m)}</span>
         <span class="match-stage">${matchStageLabel(m)}</span>
         ${live ? '<span class="match-live-badge">Today</span>' : ''}
       </div>
@@ -59,14 +62,22 @@ function renderMatchCentre() {
   const root = document.getElementById('match-centre');
   if (!root) return;
 
+  const upcomingVisible = showAllUpcoming ? upcoming : upcoming.slice(0, 24);
+  const hiddenUpcoming = upcoming.length - upcomingVisible.length;
+
   root.innerHTML =
     renderMatchSection("Today's fixtures", today, 'No matches scheduled for today.') +
     renderMatchSection('Live & today', live, 'No live fixtures right now.') +
-    renderMatchSection('Upcoming', upcoming.slice(0, 24), 'No upcoming fixtures.') +
-    (upcoming.length > 24
-      ? `<p class="footer-note">+ ${upcoming.length - 24} more upcoming matches</p>`
+    renderMatchSection('Upcoming', upcomingVisible, 'No upcoming fixtures.') +
+    (hiddenUpcoming > 0
+      ? `<button type="button" class="load-more-btn" id="show-more-upcoming">+ ${hiddenUpcoming} more upcoming matches</button>`
       : '') +
     renderMatchSection('Completed', completed.slice(0, 30), 'No completed matches yet.');
+
+  document.getElementById('show-more-upcoming')?.addEventListener('click', () => {
+    showAllUpcoming = true;
+    renderMatchCentre();
+  });
 
   const syncEl = document.getElementById('sync-status');
   if (syncEl) syncEl.textContent = formatSyncStatus(state);
