@@ -219,9 +219,3 @@ function formatMatchDateTime(m) {
   }
   return formatDate(m.date);
 }
-
-function getAllTournamentTeamCodes() {
-  const codes = new Set();
-  Object.values(WC2026_GROUPS).forEach((g) => g.forEach((c) => codes.add(c)));
-  return [...codes];
-}
