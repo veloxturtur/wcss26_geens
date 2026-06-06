@@ -369,6 +369,33 @@ main {
   font-size: 0.85rem;
 }
 
+.load-more-btn {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 1.25rem auto 0;
+  padding: 0.75rem 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.load-more-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(52, 211, 153, 0.06);
+}
+
+.bracket-slot {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
 /* Scores page */
 .date-selector {
   display: flex;
