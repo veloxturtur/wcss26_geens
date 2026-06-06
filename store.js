@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'wcSweepstake_v2';
-const DATA_VERSION = 2;
+const DATA_VERSION = 4;
 
 // Fixed team picks. Edit this list only.
 // Use FULL COUNTRY NAMES only (e.g. "England", "Netherlands").
@@ -144,7 +144,6 @@ function loadState() {
 }
 
 function saveState(state) {
-  // Do not persist team picks to localStorage.
   const { players, ...rest } = state;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
 }
@@ -420,19 +419,20 @@ function getPlayerProfile(state, playerName) {
 }
 
 function categorizeMatches(state) {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = getLocalDateString();
   const buckets = { today: [], live: [], upcoming: [], completed: [] };
 
   for (const m of state.matches) {
     if (!m.home && !m.away) continue;
     const played = matchPlayed(m);
     const entry = { ...m, played };
+    const matchDay = matchLocalDate(m);
 
     if (played) {
       buckets.completed.push(entry);
-    } else if (m.date > today) {
+    } else if (matchDay > today) {
       buckets.upcoming.push(entry);
-    } else if (m.date === today) {
+    } else if (matchDay === today) {
       buckets.today.push(entry);
       buckets.live.push(entry);
     } else {
@@ -440,8 +440,11 @@ function categorizeMatches(state) {
     }
   }
 
-  const byDate = (a, b) => a.date.localeCompare(b.date) || (a.matchNum || 0) - (b.matchNum || 0);
-  buckets.completed.sort((a, b) => b.date.localeCompare(a.date));
+  const byDate = (a, b) =>
+    matchLocalDate(a).localeCompare(matchLocalDate(b)) ||
+    (a.kickoff || '').localeCompare(b.kickoff || '') ||
+    (a.matchNum || 0) - (b.matchNum || 0);
+  buckets.completed.sort((a, b) => matchLocalDate(b).localeCompare(matchLocalDate(a)));
   buckets.today.sort(byDate);
   buckets.live.sort(byDate);
   buckets.upcoming.sort(byDate);
