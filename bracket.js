@@ -6,9 +6,20 @@ const BRACKET_ROUNDS = [
   { key: 'final', label: 'Final' },
 ];
 
+function renderBracketTeam(m, side) {
+  const code = side === 'home' ? m.home : m.away;
+  const slot = side === 'home' ? m.homeSlot : m.awaySlot;
+  if (code) return renderTeamCell(code);
+  const label = slot ? knockoutSlotLabel(slot) : null;
+  if (label) {
+    return `<span class="team-unknown">TBD <span class="bracket-slot">(${label})</span></span>`;
+  }
+  return '<span class="team-unknown">TBD</span>';
+}
+
 function renderBracketMatch(m) {
-  const home = m.home ? renderTeamCell(m.home) : 'TBD';
-  const away = m.away ? renderTeamCell(m.away) : 'TBD';
+  const home = renderBracketTeam(m, 'home');
+  const away = renderBracketTeam(m, 'away');
   const score =
     matchPlayed(m) && m.homeScore != null
       ? `<div class="bracket-score">${m.homeScore} – ${m.awayScore}</div>`
@@ -24,7 +35,7 @@ function renderBracketMatch(m) {
       <div class="bracket-team ${winner === m.home ? 'bracket-winner' : ''}">${home}</div>
       ${score}
       <div class="bracket-team ${winner === m.away ? 'bracket-winner' : ''}">${away}</div>
-      <div class="bracket-date">${formatDate(m.date)}</div>
+      <div class="bracket-date">${formatMatchDateTime(m)}</div>
     </div>`;
 }
 
