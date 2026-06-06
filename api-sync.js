@@ -134,48 +134,64 @@ function apiRoundToStage(round) {
 
 function normalizeApiEvents(events) {
   return (events || [])
-    .map((ev) => {
-      const home = teamNameToCode(ev.strHomeTeam || ev.team1);
-      const away = teamNameToCode(ev.strAwayTeam || ev.team2);
-      const group = (ev.strGroup || ev.group || '').toString().replace(/group\s*/i, '').trim().toUpperCase();
-      const round = ev.strRound || ev.round || '';
-      const stage = apiRoundToStage(round) || (group ? 'group' : null);
-      let homeScore = null;
-      let awayScore = null;
-
-      if (ev.score?.ft) {
-        homeScore = ev.score.ft[0];
-        awayScore = ev.score.ft[1];
-      } else if (ev.intHomeScore != null && ev.intAwayScore != null && ev.intHomeScore !== '') {
-        homeScore = Number(ev.intHomeScore);
-        awayScore = Number(ev.intAwayScore);
-      }
-
-      const status = (ev.strStatus || '').toLowerCase();
-      const finished =
-        homeScore != null &&
-        awayScore != null &&
-        !Number.isNaN(homeScore) &&
-        !Number.isNaN(awayScore) &&
-        (status.includes('finished') ||
-          status === 'ft' ||
-          status === 'aet' ||
-          status === 'pen' ||
-          !!ev.score?.ft);
-
-      return {
-        date: ev.dateEvent || ev.date,
-        home,
-        away,
-        group,
-        stage,
-        homeScore,
-        awayScore,
-        finished,
-        pair: home && away ? pairKey(home, away) : null,
-      };
-    })
+    .map((ev) => normalizeApiEvent(ev))
     .filter((e) => e.home && e.away && e.finished);
+}
+
+function normalizeApiEvent(ev) {
+  const home = teamNameToCode(ev.strHomeTeam || ev.team1);
+  const away = teamNameToCode(ev.strAwayTeam || ev.team2);
+  const group = (ev.strGroup || ev.group || '').toString().replace(/group\s*/i, '').trim().toUpperCase();
+  const round = ev.strRound || ev.round || '';
+  const stage = apiRoundToStage(round) || (group ? 'group' : null);
+  let homeScore = null;
+  let awayScore = null;
+
+  if (ev.score?.ft) {
+    homeScore = ev.score.ft[0];
+    awayScore = ev.score.ft[1];
+  } else if (ev.intHomeScore != null && ev.intAwayScore != null && ev.intHomeScore !== '') {
+    homeScore = Number(ev.intHomeScore);
+    awayScore = Number(ev.intAwayScore);
+  }
+
+  const status = (ev.strStatus || '').toLowerCase();
+  const finished =
+    homeScore != null &&
+    awayScore != null &&
+    !Number.isNaN(homeScore) &&
+    !Number.isNaN(awayScore) &&
+    (status.includes('finished') ||
+      status === 'ft' ||
+      status === 'aet' ||
+      status === 'pen' ||
+      !!ev.score?.ft);
+
+  let kickoff = null;
+  if (ev.strTimestamp) {
+    kickoff = ev.strTimestamp.endsWith('Z') ? ev.strTimestamp : `${ev.strTimestamp}Z`;
+  } else if (ev.date && ev.time) {
+    kickoff = parseKickoff(ev.date, ev.time);
+  }
+
+  return {
+    date: ev.dateEventLocal || ev.dateEvent || ev.date,
+    kickoff,
+    home,
+    away,
+    group,
+    stage,
+    homeScore,
+    awayScore,
+    finished,
+    pair: home && away ? pairKey(home, away) : null,
+  };
+}
+
+function normalizeScheduleEvents(events) {
+  return (events || [])
+    .map((ev) => normalizeApiEvent(ev))
+    .filter((e) => e.home && e.away);
 }
 
 async function fetchJson(url) {
@@ -184,7 +200,7 @@ async function fetchJson(url) {
   return res.json();
 }
 
-async function fetchTheSportsDbEvents() {
+async function fetchTheSportsDbRawEvents() {
   const byId = new Map();
 
   const addRaw = (list) => {
@@ -212,7 +228,11 @@ async function fetchTheSportsDbEvents() {
     }
   }
 
-  return normalizeApiEvents([...byId.values()]);
+  return [...byId.values()];
+}
+
+async function fetchTheSportsDbEvents() {
+  return normalizeApiEvents(await fetchTheSportsDbRawEvents());
 }
 
 async function fetchOpenFootballEvents() {
@@ -221,6 +241,7 @@ async function fetchOpenFootballEvents() {
     strHomeTeam: m.team1,
     strAwayTeam: m.team2,
     dateEvent: m.date,
+    time: m.time,
     strGroup: (m.group || '').replace(/group\s*/i, ''),
     strRound: m.round,
     strStatus: m.score ? 'Match Finished' : 'NS',
@@ -231,16 +252,33 @@ async function fetchOpenFootballEvents() {
   return normalizeApiEvents(matches);
 }
 
+async function fetchOpenFootballSchedule() {
+  const data = await fetchJson(OPENFOOTBALL_URL);
+  const matches = (data.matches || []).map((m) => ({
+    strHomeTeam: m.team1,
+    strAwayTeam: m.team2,
+    dateEvent: m.date,
+    time: m.time,
+    strGroup: (m.group || '').replace(/group\s*/i, ''),
+    strRound: m.round,
+    strStatus: m.score ? 'Match Finished' : 'NS',
+    score: m.score,
+    intHomeScore: m.score?.ft?.[0],
+    intAwayScore: m.score?.ft?.[1],
+  }));
+  return normalizeScheduleEvents(matches);
+}
+
 function eventMergeKey(ev) {
   return `${ev.pair}|${ev.group || ''}|${ev.stage || ''}|${ev.date || ''}`;
 }
 
-async function loadExternalEvents() {
+async function loadExternalSchedule() {
   const merged = new Map();
   const sources = [];
 
   try {
-    for (const ev of await fetchOpenFootballEvents()) {
+    for (const ev of await fetchOpenFootballSchedule()) {
       merged.set(eventMergeKey(ev), ev);
     }
     sources.push('openfootball');
@@ -249,7 +287,7 @@ async function loadExternalEvents() {
   }
 
   try {
-    for (const ev of await fetchTheSportsDbEvents()) {
+    for (const ev of normalizeScheduleEvents(await fetchTheSportsDbRawEvents())) {
       merged.set(eventMergeKey(ev), ev);
     }
     sources.push('TheSportsDB');
@@ -257,9 +295,8 @@ async function loadExternalEvents() {
     /* optional */
   }
 
-  const events = [...merged.values()];
   return {
-    events,
+    events: [...merged.values()],
     source: sources.length ? sources.join(' + ') : null,
   };
 }
@@ -309,6 +346,46 @@ function applyEventsToState(state, apiEvents) {
   return updated;
 }
 
+function applyScheduleToState(state, scheduleEvents) {
+  let updated = 0;
+  state.matches = state.matches.map((m) => {
+    const hit = findMatchingEvent(m, scheduleEvents);
+    if (!hit?.kickoff || hit.kickoff === m.kickoff) return m;
+    updated += 1;
+    return { ...m, kickoff: hit.kickoff };
+  });
+  return updated;
+}
+
+async function loadExternalEvents() {
+  const merged = new Map();
+  const sources = [];
+
+  try {
+    for (const ev of await fetchOpenFootballEvents()) {
+      merged.set(eventMergeKey(ev), ev);
+    }
+    sources.push('openfootball');
+  } catch {
+    /* optional */
+  }
+
+  try {
+    for (const ev of await fetchTheSportsDbEvents()) {
+      merged.set(eventMergeKey(ev), ev);
+    }
+    sources.push('TheSportsDB');
+  } catch {
+    /* optional */
+  }
+
+  const events = [...merged.values()];
+  return {
+    events,
+    source: sources.length ? sources.join(' + ') : null,
+  };
+}
+
 async function syncWorldCupData() {
   if (syncInFlight) return loadState();
   const state = loadState();
@@ -316,8 +393,12 @@ async function syncWorldCupData() {
 
   syncInFlight = true;
   try {
-    const { events, source } = await loadExternalEvents();
-    const count = applyEventsToState(state, events);
+    const [{ events, source: scoreSource }, { events: scheduleEvents, source: scheduleSource }] =
+      await Promise.all([loadExternalEvents(), loadExternalSchedule()]);
+    const scoreCount = applyEventsToState(state, events);
+    const scheduleCount = applyScheduleToState(state, scheduleEvents);
+    const count = scoreCount + scheduleCount;
+    const source = [scoreSource, scheduleSource].filter(Boolean).join(' + ') || null;
     state.lastSyncAt = new Date().toISOString();
     state.syncSource = source;
     state.lastSyncCount = count;
@@ -353,6 +434,7 @@ function formatSyncStatus(state) {
     month: 'short',
     hour: '2-digit',
     minute: '2-digit',
+    timeZone: UK_TIMEZONE,
   });
   const src = state.syncSource || 'API';
   return `Last updated ${when} via ${src}`;
