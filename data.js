@@ -147,9 +147,77 @@ function flagEmoji(code) {
   return String.fromCodePoint(...[...two].map((c) => a + c.charCodeAt(0)));
 }
 
+const UK_TIMEZONE = 'Europe/London';
+
+function getLocalDateString(d = new Date()) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: UK_TIMEZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(d);
+}
+
+function parseKickoffInstant(kickoff) {
+  if (!kickoff) return null;
+  const iso =
+    kickoff.endsWith('Z') || /[+-]\d{2}:\d{2}$/.test(kickoff) ? kickoff : `${kickoff}Z`;
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+/** UK calendar date for a match, derived from kick-off when available. */
+function matchLocalDate(m) {
+  const d = parseKickoffInstant(m?.kickoff);
+  return d ? getLocalDateString(d) : m.date;
+}
+
 function formatDate(iso) {
   const d = new Date(iso + 'T12:00:00');
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+/** Parse "18:00 UTC-4" style strings into an ISO UTC timestamp. */
+function parseKickoff(date, timeStr) {
+  if (!date || !timeStr) return null;
+  const m = String(timeStr).match(/^(\d{1,2}):(\d{2})\s+UTC([+-]?\d+(?:\.\d+)?)$/);
+  if (!m) return null;
+  const hours = parseInt(m[1], 10);
+  const mins = parseInt(m[2], 10);
+  const offsetHours = parseFloat(m[3]);
+  const utcMs = Date.UTC(
+    parseInt(date.slice(0, 4), 10),
+    parseInt(date.slice(5, 7), 10) - 1,
+    parseInt(date.slice(8, 10), 10),
+    hours - offsetHours,
+    mins
+  );
+  return new Date(utcMs).toISOString();
+}
+
+function formatMatchTime(m) {
+  const d = parseKickoffInstant(m?.kickoff);
+  if (!d) return '';
+  return d.toLocaleTimeString('en-GB', {
+    timeZone: UK_TIMEZONE,
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function formatMatchDateTime(m) {
+  const d = parseKickoffInstant(m?.kickoff);
+  if (d) {
+    return d.toLocaleString('en-GB', {
+      timeZone: UK_TIMEZONE,
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+  return formatDate(m.date);
 }
 
 function getAllTournamentTeamCodes() {
