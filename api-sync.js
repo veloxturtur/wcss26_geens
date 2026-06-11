@@ -135,7 +135,7 @@ function apiRoundToStage(round) {
 function normalizeApiEvents(events) {
   return (events || [])
     .map((ev) => normalizeApiEvent(ev))
-    .filter((e) => e.home && e.away && e.finished);
+    .filter((e) => e.home && e.away);
 }
 
 function normalizeApiEvent(ev) {
