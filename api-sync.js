@@ -5,7 +5,7 @@ const THESPORTSDB_SEASON_URL =
 const OPENFOOTBALL_URL =
   'https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json';
 
-const SYNC_INTERVAL_MS = 3 * 60 * 1000;
+const SYNC_INTERVAL_MS = 5 * 1000;
 let syncInFlight = false;
 
 function buildTeamNameIndex() {
