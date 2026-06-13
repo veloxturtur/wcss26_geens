@@ -7,10 +7,10 @@ const HARDCODED_MATCH_SCORES = {
   // Group A
   'g-A-0-0': { homeScore: 2, awayScore: 0 }, // MEX vs RSA
   'g-A-0-1': { homeScore: 2, awayScore: 1 }, // KOR vs CZE
-  'g-A-1-0': { homeScore: 0, awayScore: 0 }, // CZE vs RSA
-  'g-A-1-1': { homeScore: 0, awayScore: 0 }, // MEX vs KOR
-  'g-A-2-0': { homeScore: 0, awayScore: 0 }, // CZE vs MEX
-  'g-A-2-1': { homeScore: 0, awayScore: 0 }, // RSA vs KOR
+  'g-A-1-0': { homeScore: , awayScore:  }, // CZE vs RSA
+  'g-A-1-1': { homeScore: , awayScore:  }, // MEX vs KOR
+  'g-A-2-0': { homeScore: , awayScore:  }, // CZE vs MEX
+  'g-A-2-1': { homeScore: , awayScore:  }, // RSA vs KOR
 
   // Group B
   'g-B-0-0': { homeScore: 1, awayScore: 1 }, // CAN vs BIH
