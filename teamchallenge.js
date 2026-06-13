@@ -28,8 +28,8 @@ function renderTeamChallenge() {
       .map((memberName) => {
         const member = board.find((r) => r.player.toLowerCase() === memberName.toLowerCase());
         return member ? member.points : 0;
-      })
-      .filter((p) => p > 0);
+      });
+      //.filter((p) => p > 0);
     
     const totalPoints = memberPoints.reduce((sum, p) => sum + p, 0);
     // Team Werchter always divides by 4, others divide by actual member count
