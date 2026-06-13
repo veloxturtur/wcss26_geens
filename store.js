@@ -336,7 +336,8 @@ function matchPlayed(m) {
   // Check if match has hardcoded scores
   if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
     const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
-    if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null) {
+    if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.homeScore !== undefined && 
+        hardcodedScore.awayScore !== null && hardcodedScore.awayScore !== undefined) {
       return true;
     }
   }
@@ -463,9 +464,12 @@ function buildGroupStandings(matches) {
 
     tables[group] = teams;
 
-    if (teams[0]) bonuses[teams[0].code] = (bonuses[teams[0].code] || 0) + 3;
-
-    if (teams[1]) bonuses[teams[1].code] = (bonuses[teams[1].code] || 0) + 1;
+    // Only apply group bonuses when all group matches are played (each team plays 3 matches)
+    const allMatchesPlayed = teams.every(t => t.played === 3);
+    if (allMatchesPlayed) {
+      if (teams[0]) bonuses[teams[0].code] = (bonuses[teams[0].code] || 0) + 3;
+      if (teams[1]) bonuses[teams[1].code] = (bonuses[teams[1].code] || 0) + 1;
+    }
 
   }
 
