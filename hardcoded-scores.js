@@ -22,7 +22,7 @@ const HARDCODED_MATCH_SCORES = {
 
   // Group C
   'g-C-0-0': { homeScore: 1, awayScore: 1 }, // BRA vs MAR
-  'g-C-0-1': { homeScore: 0, awayScore: 1 }, // HTI vs SCO
+  'g-C-0-1': { homeScore: 1, awayScore: 0 }, // HTI vs SCO
   'g-C-1-0': { homeScore: , awayScore:  }, // SCO vs MAR
   'g-C-1-1': { homeScore: , awayScore:  }, // BRA vs HTI
   'g-C-2-0': { homeScore: , awayScore:  }, // SCO vs BRA
@@ -102,4 +102,4 @@ const HARDCODED_MATCH_SCORES = {
 };
 
 // Set this to true to use hardcoded scores, false to use API data
-const USE_HARDCODED_SCORES = false;
+const USE_HARDCODED_SCORES = true;
