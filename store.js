@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'wcSweepstake_v2';
 
-const DATA_VERSION = 4;
+const DATA_VERSION = 5;
 
 
 
