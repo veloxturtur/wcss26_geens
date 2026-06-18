@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'wcSweepstake_v2';
 
-const DATA_VERSION = 4;
+const DATA_VERSION = 5;
 
 
 
@@ -39,7 +39,6 @@ const HARD_CODED_PLAYER_INPUT = [
  { name: 'Stella', teams: ['Morocco', 'South Korea', 'Cabo Verde', 'Türkiye'] },
 
  { name: 'Teo', teams: ['Spain', 'Norway', 'Curaçao'] },
-
 ];
 
 
@@ -337,29 +336,24 @@ function matchPlayed(m) {
   if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
     const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
     if (hardcodedScore) {
-      const homeScore = hardcodedScore.homeScore;
-      const awayScore = hardcodedScore.awayScore;
-      // Only consider played if scores are actual numbers (not null)
-      if (homeScore !== null && awayScore !== null) {
-        return true;
-      }
+      // FIX: Only consider played if scores are actual numbers (not null)
+      return hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null;
     }
   }
   
-  return m.homeScore !== null && m.awayScore !== null && m.homeScore !== '' && m.awayScore !== '';
+  return m.homeScore != null && m.awayScore != null && m.homeScore !== '' && m.awayScore !== '';
 
 }
 
 
 
 function groupMatchPoints(homeScore, awayScore) {
-
+  // SAFETY NET: Ignore unplayed/null games completely
+  if (homeScore == null || awayScore == null || homeScore === '' || awayScore === '') return { home: 0, away: 0 };
+  
   if (homeScore > awayScore) return { home: 3, away: 0 };
-
   if (homeScore < awayScore) return { home: 0, away: 3 };
-
   return { home: 1, away: 1 };
-
 }
 
 
@@ -398,7 +392,8 @@ function buildGroupStandings(matches) {
     
     if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
       const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
-      if (hardcodedScore) {
+      // FIX: Only overwrite if the hardcoded scores are NOT null
+      if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null) {
         homeScore = hardcodedScore.homeScore;
         awayScore = hardcodedScore.awayScore;
       }
@@ -603,7 +598,8 @@ function calculateTeamPoints(state) {
     
     if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
       const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
-      if (hardcodedScore) {
+      // FIX: Only overwrite if the hardcoded scores are NOT null
+      if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null) {
         homeScore = hardcodedScore.homeScore;
         awayScore = hardcodedScore.awayScore;
       }
@@ -1060,4 +1056,3 @@ function getMatchDatesFromState(state) {
   return getMatchDates(state.matches);
 
 }
-
