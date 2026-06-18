@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'wcSweepstake_v2';
 
-const DATA_VERSION = 5;
+const DATA_VERSION = 4;
 
 
 
@@ -12,34 +12,35 @@ const DATA_VERSION = 5;
 
 const HARD_CODED_PLAYER_INPUT = [
 
- { name: 'Evi', teams: ['Portugal', 'Sweden', 'Uzbekistan'] },
+ { name: 'Paula', teams: ['Bosnia and Herzegovina', 'Senegal', 'England'] },
 
- { name: 'Jasper', teams: ['Mexico', 'Côte d\'Ivoire', 'Saudi Arabia'] },
+ { name: 'Hien', teams: ['Qatar', 'Australia', 'Morocco'] },
 
- { name: 'Jurgen', teams: ['Colombia', 'Panama', 'Bosnia and Herzegovina'] },
+ { name: 'Murdoch', teams: ['Uzbekistan', 'Norway', 'France'] },
 
- { name: 'Lien', teams: ['Germany', 'Canada', 'Iraq', 'Switzerland'] },
+ { name: 'Lien', teams: ['Paraguay', 'Panama', 'Netherlands'] },
 
- { name: 'Noah', teams: ['Belgium', 'Algeria', 'Qatar'] },
+ { name: 'Colin', teams: ['Iraq', 'Türkiye', 'Portugal'] },
 
- { name: 'Oma', teams: ['Croatia', 'Australia', 'Ghana', 'Japan'] },
+ { name: 'Angus', teams: ['Cabo Verde', 'Austria', 'Brazil'] },
 
- { name: 'Opa', teams: ['Argentina', 'Scotland', 'DR Congo', 'USA'] },
+ { name: 'Teresa', teams: ['Saudi Arabia', 'Algeria', 'USA'] },
 
- { name: 'Oscar', teams: ['Brazil', 'Egypt', 'New Zealand'] },
+ { name: 'Jess', teams: ['Tunisia', 'Czechia', 'Spain'] },
 
- { name: 'Peet', teams: ['Jordan', 'Paraguay', 'Senegal', 'Iran'] },
+ { name: 'Harry', teams: ['South Africa', 'Uruguay', 'Argentina'] },
 
- { name: 'Pie', teams: ['France', 'Czechia', 'Tunisia', 'Uruguay'] },
+ { name: 'Javier', teams: ['Scotland', 'Ecuador', 'Mexico'] },
 
- { name: 'Sara', teams: ['Netherlands', 'Austria', 'South Africa'] },
+ { name: 'Sharanja', teams: ['DR Congo', 'Sweden', 'Germany'] },
 
- { name: 'Stan', teams: ['England', 'Ecuador', 'Haiti'] },
+ { name: 'Farah', teams: ['Côte d\'Ivoire', 'Egypt', 'Switzerland'] },
 
- { name: 'Stella', teams: ['Morocco', 'South Korea', 'Cabo Verde', 'Türkiye'] },
+ { name: 'Elisa', teams: ['Jordan', 'Canada', 'Colombia'] },
 
- { name: 'Teo', teams: ['Spain', 'Norway', 'Curaçao'] },
+ { name: 'Christian', teams: ['Ghana', 'Iran', 'Croatia'] },
 
+ { name: 'Kevin', teams: ['South Korea', 'Japan', 'Belgium'] },
 ];
 
 
@@ -334,13 +335,14 @@ function getPlayerByTeamCode(state, code) {
 
 function matchPlayed(m) {
   // Check if match has hardcoded scores
-  if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
-    const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
-    if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.homeScore !== undefined && 
-        hardcodedScore.awayScore !== null && hardcodedScore.awayScore !== undefined) {
-      return true;
+ if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
+      const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
+      // FIX: Only overwrite if the hardcoded scores are NOT null
+      if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null) {
+        homeScore = hardcodedScore.homeScore;
+        awayScore = hardcodedScore.awayScore;
+      }
     }
-  }
   
   return m.homeScore !== null && m.awayScore !== null && m.homeScore !== '' && m.awayScore !== '';
 
@@ -349,15 +351,13 @@ function matchPlayed(m) {
 
 
 function groupMatchPoints(homeScore, awayScore) {
-
+  // SAFETY NET: Ignore unplayed/null games completely
+  if (homeScore === null || awayScore === null) return { home: 0, away: 0 };
+  
   if (homeScore > awayScore) return { home: 3, away: 0 };
-
   if (homeScore < awayScore) return { home: 0, away: 3 };
-
   return { home: 1, away: 1 };
-
 }
-
 
 
 function buildGroupStandings(matches) {
