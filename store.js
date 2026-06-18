@@ -12,35 +12,33 @@ const DATA_VERSION = 4;
 
 const HARD_CODED_PLAYER_INPUT = [
 
- { name: 'Paula', teams: ['Bosnia and Herzegovina', 'Senegal', 'England'] },
+{ name: 'Evi', teams: ['Portugal', 'Sweden', 'Uzbekistan'] },
 
- { name: 'Hien', teams: ['Qatar', 'Australia', 'Morocco'] },
+{ name: 'Jasper', teams: ['Mexico', 'Côte d\'Ivoire', 'Saudi Arabia'] },
+ 
+{ name: 'Jurgen', teams: ['Colombia', 'Panama', 'Bosnia and Herzegovina'] },
+ 
+ { name: 'Lien', teams: ['Germany', 'Canada', 'Iraq', 'Switzerland'] },
+ 
+ { name: 'Noah', teams: ['Belgium', 'Algeria', 'Qatar'] },
+ 
+ { name: 'Oma', teams: ['Croatia', 'Australia', 'Ghana', 'Japan'] },
 
- { name: 'Murdoch', teams: ['Uzbekistan', 'Norway', 'France'] },
-
- { name: 'Lien', teams: ['Paraguay', 'Panama', 'Netherlands'] },
-
- { name: 'Colin', teams: ['Iraq', 'Türkiye', 'Portugal'] },
-
- { name: 'Angus', teams: ['Cabo Verde', 'Austria', 'Brazil'] },
-
- { name: 'Teresa', teams: ['Saudi Arabia', 'Algeria', 'USA'] },
-
- { name: 'Jess', teams: ['Tunisia', 'Czechia', 'Spain'] },
-
- { name: 'Harry', teams: ['South Africa', 'Uruguay', 'Argentina'] },
-
- { name: 'Javier', teams: ['Scotland', 'Ecuador', 'Mexico'] },
-
- { name: 'Sharanja', teams: ['DR Congo', 'Sweden', 'Germany'] },
-
- { name: 'Farah', teams: ['Côte d\'Ivoire', 'Egypt', 'Switzerland'] },
-
- { name: 'Elisa', teams: ['Jordan', 'Canada', 'Colombia'] },
-
- { name: 'Christian', teams: ['Ghana', 'Iran', 'Croatia'] },
-
- { name: 'Kevin', teams: ['South Korea', 'Japan', 'Belgium'] },
+ { name: 'Opa', teams: ['Argentina', 'Scotland', 'DR Congo', 'USA'] },
+ 
+ { name: 'Oscar', teams: ['Brazil', 'Egypt', 'New Zealand'] },
+ 
+ { name: 'Peet', teams: ['Jordan', 'Paraguay', 'Senegal', 'Iran'] },
+ 
+ { name: 'Pie', teams: ['France', 'Czechia', 'Tunisia', 'Uruguay'] },
+ 
+ { name: 'Sara', teams: ['Netherlands', 'Austria', 'South Africa'] },
+ 
+ { name: 'Stan', teams: ['England', 'Ecuador', 'Haiti'] },
+ 
+{ name: 'Stella', teams: ['Morocco', 'South Korea', 'Cabo Verde', 'Türkiye'] },
+ 
+ { name: 'Teo', teams: ['Spain', 'Norway', 'Curaçao'] },
 ];
 
 
