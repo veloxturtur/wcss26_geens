@@ -9,14 +9,14 @@ const HARDCODED_MATCH_SCORES = {
   'g-A-0-1': { homeScore: 2, awayScore: 1 }, // KOR vs CZE
   'g-A-1-0': { homeScore: 1, awayScore: 0 }, // MEX vs KOR
   'g-A-1-1': { homeScore: 1, awayScore: 1 }, // RSA vs CZE
-  'g-A-2-0': { homeScore: null, awayScore: null }, // CZE vs MEX
-  'g-A-2-1': { homeScore: null, awayScore: null }, // RSA vs KOR
+  'g-A-2-0': { homeScore: 0, awayScore: 3 }, // CZE vs MEX
+  'g-A-2-1': { homeScore: 1, awayScore: 0 }, // RSA vs KOR
 
   // Group B (CAN, BIH, QAT, SUI)
   'g-B-0-0': { homeScore: 6, awayScore: 0 }, // CAN vs QAT
   'g-B-0-1': { homeScore: 4, awayScore: 1 }, // SUI vs BIH
-  'g-B-1-0': { homeScore: null, awayScore: null }, // CAN vs SUI
-  'g-B-1-1': { homeScore: null, awayScore: null }, // QAT vs BIH
+  'g-B-1-0': { homeScore: 1, awayScore: 2 }, // CAN vs SUI
+  'g-B-1-1': { homeScore: 1, awayScore: 3 }, // QAT vs BIH
   'g-B-2-0': { homeScore: 1, awayScore: 1 }, // CAN vs BIH
   'g-B-2-1': { homeScore: 1, awayScore: 1 }, // QAT vs SUI
 
@@ -25,8 +25,8 @@ const HARDCODED_MATCH_SCORES = {
   'g-C-0-1': { homeScore: 1, awayScore: 0 }, // HTI vs SCO
   'g-C-1-0': { homeScore: 3, awayScore: 0 }, // BRA vs HTI
   'g-C-1-1': { homeScore: 1, awayScore: 0 }, // MAR vs SCO
-  'g-C-2-0': { homeScore: null, awayScore: null }, // SCO vs BRA
-  'g-C-2-1': { homeScore: null, awayScore: null }, // MAR vs HTI
+  'g-C-2-0': { homeScore: 0, awayScore: 3 }, // SCO vs BRA
+  'g-C-2-1': { homeScore: 4, awayScore: 2 }, // MAR vs HTI
 
   // Group D (USA, PAR, AUS, TUR)
   'g-D-0-0': { homeScore: 4, awayScore: 1 }, // USA vs PAR
