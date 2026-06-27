@@ -102,52 +102,52 @@ const HARDCODED_MATCH_SCORES = {
 
   // ==========================================
   // OFFICIAL FIFA KNOCKOUT BRACKET TEMPLATE
-  // First team listed = Home (left score), Second team listed = Away (right score)
+  // Includes 'home' and 'away' tags so manual testing works instantly!
   // ==========================================
 
-  // Round of 32 (Matches 73 to 88)
-  'ko-r32-1': { homeScore: null, awayScore: null }, // Runner-up Group A vs Runner-up Group B (Match 73)
-  'ko-r32-2': { homeScore: null, awayScore: null }, // Winner Group E vs 3rd Place Group A/B/C/D/F (Match 74)
-  'ko-r32-3': { homeScore: null, awayScore: null }, // Winner Group F vs Runner-up Group C (Match 75)
-  'ko-r32-4': { homeScore: null, awayScore: null }, // Winner Group C vs Runner-up Group F (Match 76)
-  'ko-r32-5': { homeScore: null, awayScore: null }, // Winner Group I vs 3rd Place Group C/D/F/G/H (Match 77)
-  'ko-r32-6': { homeScore: null, awayScore: null }, // Runner-up Group E vs Runner-up Group I (Match 78)
-  'ko-r32-7': { homeScore: null, awayScore: null }, // Winner Group A vs 3rd Place Group C/E/F/H/I (Match 79)
-  'ko-r32-8': { homeScore: null, awayScore: null }, // Winner Group L vs 3rd Place Group E/H/I/J/K (Match 80)
-  'ko-r32-9': { homeScore: null, awayScore: null }, // Winner Group D vs 3rd Place Group B/E/F/I/J (Match 81)
-  'ko-r32-10': { homeScore: null, awayScore: null }, // Winner Group G vs 3rd Place Group A/E/H/I/J (Match 82)
-  'ko-r32-11': { homeScore: null, awayScore: null }, // Runner-up Group K vs Runner-up Group L (Match 83)
-  'ko-r32-12': { homeScore: null, awayScore: null }, // Winner Group H vs Runner-up Group J (Match 84)
-  'ko-r32-13': { homeScore: null, awayScore: null }, // Winner Group B vs 3rd Place Group E/F/G/I/J (Match 85)
-  'ko-r32-14': { homeScore: null, awayScore: null }, // Winner Group J vs Runner-up Group H (Match 86)
-  'ko-r32-15': { homeScore: null, awayScore: null }, // Winner Group K vs 3rd Place Group D/E/I/J/L (Match 87)
-  'ko-r32-16': { homeScore: null, awayScore: null }, // Runner-up Group D vs Runner-up Group G (Match 88)
+  // Round of 32 (+2 pts bonus per win)
+  'ko-r32-1': { home: 'RSA', away: 'CAN', homeScore: 1, awayScore: 0 }, // RSA vs CAN (Runner-up Grp A vs Runner-up Grp B)
+  'ko-r32-2': { home: 'GER', away: 'BIH', homeScore: null, awayScore: null }, // GER vs BIH (Winner Grp E vs 3rd Place Grp B)
+  'ko-r32-3': { home: 'NED', away: 'MAR', homeScore: null, awayScore: null }, // NED vs MAR (Winner Grp F vs Runner-up Grp C)
+  'ko-r32-4': { home: 'BRA', away: 'JPN', homeScore: null, awayScore: null }, // BRA vs JPN (Winner Grp C vs Runner-up Grp F)
+  'ko-r32-5': { home: 'FRA', away: 'PAR', homeScore: null, awayScore: null }, // FRA vs PAR (Winner Grp I vs 3rd Place Grp D)
+  'ko-r32-6': { home: 'CIV', away: 'NOR', homeScore: null, awayScore: null }, // CIV vs NOR (Runner-up Grp E vs Runner-up Grp I)
+  'ko-r32-7': { home: 'MEX', away: 'SWE', homeScore: null, awayScore: null }, // MEX vs SWE (Winner Grp A vs 3rd Place Grp F)
+  'ko-r32-8': { home: 'ENG', away: 'SEN', homeScore: null, awayScore: null }, // ENG vs SEN (Winner Grp L vs 3rd Place Grp I)
+  'ko-r32-9': { home: 'USA', away: 'ECU', homeScore: null, awayScore: null }, // USA vs ECU (Winner Grp D vs 3rd Place Grp E)
+  'ko-r32-10': { home: 'BEL', away: 'IRN', homeScore: null, awayScore: null }, // BEL vs IRN (Winner Grp G vs 3rd Place Grp G)
+  'ko-r32-11': { home: 'POR', away: 'GHA', homeScore: null, awayScore: null }, // POR vs GHA (Runner-up Grp K vs Runner-up Grp L)
+  'ko-r32-12': { home: 'ESP', away: 'AUT', homeScore: null, awayScore: null }, // ESP vs AUT (Winner Grp H vs Runner-up Grp J)
+  'ko-r32-13': { home: 'SUI', away: 'HTI', homeScore: null, awayScore: null }, // SUI vs HTI (Winner Grp B vs 3rd Place Grp C)
+  'ko-r32-14': { home: 'ARG', away: 'CPV', homeScore: null, awayScore: null }, // ARG vs CPV (Winner Grp J vs Runner-up Grp H)
+  'ko-r32-15': { home: 'COL', away: 'CRO', homeScore: null, awayScore: null }, // COL vs CRO (Winner Grp K vs 3rd Place Grp L)
+  'ko-r32-16': { home: 'AUS', away: 'EGY', homeScore: null, awayScore: null }, // AUS vs EGY (Runner-up Grp D vs Runner-up Grp G)
 
-  // Round of 16 (Matches 89 to 96)
-  'ko-r16-1': { homeScore: null, awayScore: null }, // Winner ko-r32-2 vs Winner ko-r32-5 (Match 89)
-  'ko-r16-2': { homeScore: null, awayScore: null }, // Winner ko-r32-1 vs Winner ko-r32-3 (Match 90)
-  'ko-r16-3': { homeScore: null, awayScore: null }, // Winner ko-r32-4 vs Winner ko-r32-6 (Match 91)
-  'ko-r16-4': { homeScore: null, awayScore: null }, // Winner ko-r32-7 vs Winner ko-r32-8 (Match 92)
-  'ko-r16-5': { homeScore: null, awayScore: null }, // Winner ko-r32-11 vs Winner ko-r32-12 (Match 93)
-  'ko-r16-6': { homeScore: null, awayScore: null }, // Winner ko-r32-9 vs Winner ko-r32-10 (Match 94)
-  'ko-r16-7': { homeScore: null, awayScore: null }, // Winner ko-r32-14 vs Winner ko-r32-16 (Match 95)
-  'ko-r16-8': { homeScore: null, awayScore: null }, // Winner ko-r32-13 vs Winner ko-r32-15 (Match 96)
+  // Round of 16 (+4 pts bonus)
+  'ko-r16-1': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-2 vs Winner r32-5
+  'ko-r16-2': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-1 vs Winner r32-3
+  'ko-r16-3': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-4 vs Winner r32-6
+  'ko-r16-4': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-7 vs Winner r32-8
+  'ko-r16-5': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-11 vs Winner r32-12
+  'ko-r16-6': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-9 vs Winner r32-10
+  'ko-r16-7': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-14 vs Winner r32-16
+  'ko-r16-8': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-13 vs Winner r32-15
 
-  // Quarterfinals (Matches 97 to 100)
-  'ko-qf-1': { homeScore: null, awayScore: null }, // Winner ko-r16-1 vs Winner ko-r16-2 (Match 97)
-  'ko-qf-2': { homeScore: null, awayScore: null }, // Winner ko-r16-5 vs Winner ko-r16-6 (Match 98)
-  'ko-qf-3': { homeScore: null, awayScore: null }, // Winner ko-r16-3 vs Winner ko-r16-4 (Match 99)
-  'ko-qf-4': { homeScore: null, awayScore: null }, // Winner ko-r16-7 vs Winner ko-r16-8 (Match 100)
+  // Quarterfinals (+6 pts bonus)
+  'ko-qf-1': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-1 vs Winner r16-2
+  'ko-qf-2': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-5 vs Winner r16-6
+  'ko-qf-3': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-3 vs Winner r16-4
+  'ko-qf-4': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-7 vs Winner r16-8
 
-  // Semifinals (Matches 101 to 102)
-  'ko-sf-1': { homeScore: null, awayScore: null }, // Winner ko-qf-1 vs Winner ko-qf-2 (Match 101)
-  'ko-sf-2': { homeScore: null, awayScore: null }, // Winner ko-qf-3 vs Winner ko-qf-4 (Match 102)
+  // Semifinals (+9 pts bonus)
+  'ko-sf-1': { home: null, away: null, homeScore: null, awayScore: null }, // Winner qf-1 vs Winner qf-2
+  'ko-sf-2': { home: null, away: null, homeScore: null, awayScore: null }, // Winner qf-3 vs Winner qf-4
 
-  // Bronze Final / 3rd Place Playoff (Match 103)
-  'ko-3rd': { homeScore: null, awayScore: null }, // Loser ko-sf-1 vs Loser ko-sf-2 (Match 103)
+  // Bronze Final / 3rd Place Playoff
+  'ko-3rd': { home: null, away: null, homeScore: null, awayScore: null }, // Loser sf-1 vs Loser sf-2
 
-  // Grand Final (Match 104)
-  'ko-final': { homeScore: null, awayScore: null } // Winner ko-sf-1 vs Winner ko-sf-2 (Match 104)
+  // Grand Final (+15 pts to Winner, +12 pts to Runner Up)
+  'ko-final': { home: null, away: null, homeScore: null, awayScore: null } // Winner sf-1 vs Winner sf-2
 };
 
 // Set this to true to use hardcoded scores, false to use API data
