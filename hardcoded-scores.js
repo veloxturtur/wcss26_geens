@@ -99,6 +99,56 @@ const HARDCODED_MATCH_SCORES = {
   'g-L-1-1': { homeScore: null, awayScore: null }, // GHA vs CRO
   'g-L-2-0': { homeScore: 4, awayScore: 2 }, // ENG vs CRO
   'g-L-2-1': { homeScore: 1, awayScore: 0 }, // GHA vs PAN
+
+  // ==========================================
+  // KNOCKOUT STAGE TEMPLATE
+  // First team = Home (left score), Second team = Away (right score)
+  // Check live bracket.html once groups finish to confirm actual country names!
+  // ==========================================
+
+  // Round of 32 (+2 pts bonus per win)
+  'ko-r32-1': { homeScore: null, awayScore: null }, // Winner Group A vs 3rd Place Group C/D/E
+  'ko-r32-2': { homeScore: null, awayScore: null }, // Runner-up Group A vs Runner-up Group B
+  'ko-r32-3': { homeScore: null, awayScore: null }, // Winner Group B vs 3rd Place Group E/F/G
+  'ko-r32-4': { homeScore: null, awayScore: null }, // Winner Group C vs Runner-up Group D
+  'ko-r32-5': { homeScore: null, awayScore: null }, // Winner Group D vs 3rd Place Group A/B/F
+  'ko-r32-6': { homeScore: null, awayScore: null }, // Runner-up Group C vs Runner-up Group E
+  'ko-r32-7': { homeScore: null, awayScore: null }, // Winner Group E vs Runner-up Group F
+  'ko-r32-8': { homeScore: null, awayScore: null }, // Winner Group F vs Runner-up Group G
+  'ko-r32-9': { homeScore: null, awayScore: null }, // Winner Group G vs 3rd Place Group A/H/I
+  'ko-r32-10': { homeScore: null, awayScore: null }, // Runner-up Group D vs Runner-up Group H
+  'ko-r32-11': { homeScore: null, awayScore: null }, // Winner Group H vs 3rd Place Group J/K/L
+  'ko-r32-12': { homeScore: null, awayScore: null }, // Winner Group I vs Runner-up Group J
+  'ko-r32-13': { homeScore: null, awayScore: null }, // Winner Group J vs Runner-up Group K
+  'ko-r32-14': { homeScore: null, awayScore: null }, // Runner-up Group F vs Runner-up Group L
+  'ko-r32-15': { homeScore: null, awayScore: null }, // Winner Group K vs 3rd Place Group D/E/J
+  'ko-r32-16': { homeScore: null, awayScore: null }, // Winner Group L vs 3rd Place Group E/H/I
+
+  // Round of 16 (+4 pts bonus)
+  'ko-r16-1': { homeScore: null, awayScore: null }, // Winner r32-1 vs Winner r32-2
+  'ko-r16-2': { homeScore: null, awayScore: null }, // Winner r32-3 vs Winner r32-4
+  'ko-r16-3': { homeScore: null, awayScore: null }, // Winner r32-5 vs Winner r32-6
+  'ko-r16-4': { homeScore: null, awayScore: null }, // Winner r32-7 vs Winner r32-8
+  'ko-r16-5': { homeScore: null, awayScore: null }, // Winner r32-9 vs Winner r32-10
+  'ko-r16-6': { homeScore: null, awayScore: null }, // Winner r32-11 vs Winner r32-12
+  'ko-r16-7': { homeScore: null, awayScore: null }, // Winner r32-13 vs Winner r32-14
+  'ko-r16-8': { homeScore: null, awayScore: null }, // Winner r32-15 vs Winner r32-16
+
+  // Quarter Finals (+6 pts bonus)
+  'ko-qf-1': { homeScore: null, awayScore: null }, // Winner r16-1 vs Winner r16-2
+  'ko-qf-2': { homeScore: null, awayScore: null }, // Winner r16-3 vs Winner r16-4
+  'ko-qf-3': { homeScore: null, awayScore: null }, // Winner r16-5 vs Winner r16-6
+  'ko-qf-4': { homeScore: null, awayScore: null }, // Winner r16-7 vs Winner r16-8
+
+  // Semi Finals (+9 pts bonus)
+  'ko-sf-1': { homeScore: null, awayScore: null }, // Winner qf-1 vs Winner qf-2
+  'ko-sf-2': { homeScore: null, awayScore: null }, // Winner qf-3 vs Winner qf-4
+
+  // 3rd Place Playoff
+  'ko-3rd': { homeScore: null, awayScore: null }, // Loser sf-1 vs Loser sf-2
+
+  // Grand Final (+15 pts to Winner, +12 pts to Runner Up)
+  'ko-final': { homeScore: null, awayScore: null } // Winner sf-1 vs Winner sf-2
 };
 
 // Set this to true to use hardcoded scores, false to use API data
