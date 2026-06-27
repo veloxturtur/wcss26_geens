@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'wcSweepstake_v2';
 
-const DATA_VERSION = 5;
+const DATA_VERSION = 7; // Bumped to 7 to auto-wipe browser cache
 
 
 
@@ -39,6 +39,7 @@ const HARD_CODED_PLAYER_INPUT = [
  { name: 'Stella', teams: ['Morocco', 'South Korea', 'Cabo Verde', 'Türkiye'] },
 
  { name: 'Teo', teams: ['Spain', 'Norway', 'Curaçao'] },
+
 ];
 
 
@@ -49,15 +50,11 @@ function normalizeTeamNameInput(s) {
 
   if (s == null) return '';
 
-  // Lowercase + remove diacritics (e.g., "Türkiye" -> "turkiye")
-
   return String(s).normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().trim();
 
 }
 
 
-
-// Build "full country name" -> team code index from `data.js`.
 
 const FULL_NAME_TO_TEAM_CODE = (() => {
 
@@ -97,15 +94,11 @@ const HARD_CODED_PLAYERS = HARD_CODED_PLAYER_INPUT.map((p, idx) => {
 
       const s = String(t).trim();
 
-      // First: try to match by full country name.
-
       const byName = fullTeamNameToCode(s);
 
       if (byName) return byName;
 
 
-
-      // If it looks like a 3-letter code, reject it.
 
       if (/^[A-Za-z]{3}$/.test(s)) {
 
@@ -153,6 +146,26 @@ const STAGE_ORDER = ['group', 'r32', 'r16', 'qf', 'sf', 'final'];
 
 
 
+// UPGRADE: Automatically inject hardcoded scores, home teams, and away teams into matches
+function getEffectiveMatches(rawMatches) {
+  if (typeof USE_HARDCODED_SCORES === 'undefined' || !USE_HARDCODED_SCORES || typeof HARDCODED_MATCH_SCORES === 'undefined') {
+    return rawMatches;
+  }
+  return (rawMatches || []).map((m) => {
+    const hard = HARDCODED_MATCH_SCORES[m.id];
+    if (!hard) return m;
+    return {
+      ...m,
+      home: hard.home !== undefined ? hard.home : m.home,
+      away: hard.away !== undefined ? hard.away : m.away,
+      homeScore: hard.homeScore !== undefined ? hard.homeScore : m.homeScore,
+      awayScore: hard.awayScore !== undefined ? hard.awayScore : m.awayScore,
+    };
+  });
+}
+
+
+
 function defaultState() {
 
   return {
@@ -165,8 +178,8 @@ function defaultState() {
 
     players: HARD_CODED_PLAYERS,
 
-    matches: generateDefaultMatches(),
-    
+    matches: getEffectiveMatches(generateDefaultMatches()),
+
     manualScores: {},
 
     knockoutTeams: {},
@@ -209,9 +222,9 @@ function loadState() {
 
       const needsRegeneration = parsed.dataVersion !== DATA_VERSION;
 
-      return {
+      const rawMatches = needsRegeneration ? generateDefaultMatches() : (parsed.matches?.length ? parsed.matches : generateDefaultMatches());
 
-        // Team picks are fixed in code, so always treat setup as locked.
+      return {
 
         setupComplete: true,
 
@@ -221,8 +234,8 @@ function loadState() {
 
         players: HARD_CODED_PLAYERS,
 
-        matches: needsRegeneration ? generateDefaultMatches() : (parsed.matches?.length ? parsed.matches : generateDefaultMatches()),
-        
+        matches: getEffectiveMatches(rawMatches),
+
         manualScores: needsRegeneration ? {} : (parsed.manualScores ?? {}),
 
         knockoutTeams: needsRegeneration ? {} : (parsed.knockoutTeams ?? {}),
@@ -259,10 +272,10 @@ function loadState() {
 
         players: HARD_CODED_PLAYERS,
 
-        matches: generateDefaultMatches(),
+        matches: getEffectiveMatches(generateDefaultMatches()),
 
         knockoutTeams: {},
-        
+
         manualScores: {},
 
         lastSyncAt: null,
@@ -332,27 +345,17 @@ function getPlayerByTeamCode(state, code) {
 
 
 function matchPlayed(m) {
-  // Check if match has hardcoded scores
-  if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
-    const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
-    if (hardcodedScore) {
-      // FIX: Only consider played if scores are actual numbers (not null)
-      return hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null;
-    }
-  }
-  
   return m.homeScore != null && m.awayScore != null && m.homeScore !== '' && m.awayScore !== '';
-
 }
 
 
 
 function groupMatchPoints(homeScore, awayScore) {
-  // SAFETY NET: Ignore unplayed/null games completely
   if (homeScore == null || awayScore == null || homeScore === '' || awayScore === '') return { home: 0, away: 0 };
-  
-  if (homeScore > awayScore) return { home: 3, away: 0 };
-  if (homeScore < awayScore) return { home: 0, away: 3 };
+  const hs = Number(homeScore);
+  const as = Number(awayScore);
+  if (hs > as) return { home: 3, away: 0 };
+  if (hs < as) return { home: 0, away: 3 };
   return { home: 1, away: 1 };
 }
 
@@ -386,20 +389,9 @@ function buildGroupStandings(matches) {
 
     register(m.away);
 
-    // Use hardcoded scores if available and enabled
-    let homeScore = m.homeScore;
-    let awayScore = m.awayScore;
-    
-    if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
-      const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
-      // FIX: Only overwrite if the hardcoded scores are NOT null
-      if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null) {
-        homeScore = hardcodedScore.homeScore;
-        awayScore = hardcodedScore.awayScore;
-      }
-    }
-
-    const { home: hp, away: ap } = groupMatchPoints(homeScore, awayScore);
+    const hs = Number(m.homeScore);
+    const as = Number(m.awayScore);
+    const { home: hp, away: ap } = groupMatchPoints(hs, as);
 
     const h = groups[m.group][m.home];
 
@@ -407,17 +399,17 @@ function buildGroupStandings(matches) {
 
     h.pts += hp;
 
-    h.gf += homeScore;
+    h.gf += hs;
 
-    h.gd += homeScore - awayScore;
+    h.gd += hs - as;
 
     h.played += 1;
 
     a.pts += ap;
 
-    a.gf += awayScore;
+    a.gf += as;
 
-    a.gd += awayScore - homeScore;
+    a.gd += as - hs;
 
     a.played += 1;
 
@@ -463,7 +455,6 @@ function buildGroupStandings(matches) {
 
     tables[group] = teams;
 
-    // Only apply group bonuses when all group matches are played (each team plays 3 matches)
     const allMatchesPlayed = teams.every(t => t.played === 3);
     if (allMatchesPlayed) {
       if (teams[0]) bonuses[teams[0].code] = (bonuses[teams[0].code] || 0) + 3;
@@ -479,42 +470,55 @@ function buildGroupStandings(matches) {
 
 
 function getKnockoutReach(matches, knockoutTeams) {
+
   const reach = { ...knockoutTeams };
 
+
+
   const knockoutMatches = matches
+
     .filter((m) => m.stage !== 'group' && matchPlayed(m))
+
     .sort((a, b) => STAGE_ORDER.indexOf(a.stage) - STAGE_ORDER.indexOf(b.stage));
 
+
+
   for (const m of knockoutMatches) {
+
     const stage = m.stage;
+
     if (m.home) reach[m.home] = maxStage(reach[m.home], stage);
+
     if (m.away) reach[m.away] = maxStage(reach[m.away], stage);
 
-    // UPGRADE: Check hardcoded scores first!
-    let hs = m.homeScore;
-    let as = m.awayScore;
-    if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
-      const hard = HARDCODED_MATCH_SCORES[m.id];
-      if (hard && hard.homeScore !== null && hard.awayScore !== null) {
-        hs = hard.homeScore;
-        as = hard.awayScore;
-      }
-    }
-
-    if (hs == null || as == null || hs === as) continue;
+    if (m.homeScore == null || m.awayScore == null || m.homeScore === m.awayScore) continue;
+    const hs = Number(m.homeScore);
+    const as = Number(m.awayScore);
     const winner = hs > as ? m.home : m.away;
     const loser = hs > as ? m.away : m.home;
 
+
+
     if (stage === 'final') {
+
       reach[winner] = 'final';
+
       reach[loser] = 'runnerUp';
+
     } else {
+
       const next = nextStage(stage);
+
       if (next && winner) reach[winner] = maxStage(reach[winner], next);
+
     }
+
   }
+
   return reach;
+
 }
+
 
 
 function maxStage(a, b) {
@@ -554,52 +558,67 @@ function knockoutPointsForStage(stage) {
 
 
 function calculateTeamPoints(state) {
+
   const { matches, knockoutTeams } = state;
+
   const points = {};
 
-  // FIX: Only initialize to 0 if the team hasn't been added to the points list yet!
+
+
   const init = (code) => {
     if (code && points[code] === undefined) points[code] = 0;
   };
 
+
+
   for (const m of matches) {
+
     if (m.stage !== 'group' || !matchPlayed(m)) continue;
+
     init(m.home);
+
     init(m.away);
 
-    // Use hardcoded scores if available and enabled
-    let homeScore = m.homeScore;
-    let awayScore = m.awayScore;
-    
-    if (typeof USE_HARDCODED_SCORES !== 'undefined' && USE_HARDCODED_SCORES && typeof HARDCODED_MATCH_SCORES !== 'undefined') {
-      const hardcodedScore = HARDCODED_MATCH_SCORES[m.id];
-      // Only overwrite if the hardcoded scores are NOT null
-      if (hardcodedScore && hardcodedScore.homeScore !== null && hardcodedScore.awayScore !== null) {
-        homeScore = hardcodedScore.homeScore;
-        awayScore = hardcodedScore.awayScore;
-      }
-    }
+    const { home, away } = groupMatchPoints(m.homeScore, m.awayScore);
 
-    const { home, away } = groupMatchPoints(homeScore, awayScore);
     points[m.home] += home;
+
     points[m.away] += away;
+
   }
+
+
 
   const { bonuses } = buildGroupStandings(matches);
+
   for (const [code, bonus] of Object.entries(bonuses)) {
+
     init(code);
+
     points[code] += bonus;
+
   }
+
+
 
   const reach = getKnockoutReach(matches, knockoutTeams);
+
   for (const [code, stage] of Object.entries(reach)) {
+
     if (!code) continue;
+
     init(code);
+
     points[code] += knockoutPointsForStage(stage);
+
   }
 
+
+
   return points;
+
 }
+
 
 
 function countTeamMatchesPlayed(state, code) {
