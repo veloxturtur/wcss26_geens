@@ -99,55 +99,6 @@ const HARDCODED_MATCH_SCORES = {
   'g-L-1-1': { homeScore: null, awayScore: null }, // GHA vs CRO
   'g-L-2-0': { homeScore: 4, awayScore: 2 }, // ENG vs CRO
   'g-L-2-1': { homeScore: 1, awayScore: 0 }, // GHA vs PAN
-
-  // ==========================================
-  // OFFICIAL FIFA KNOCKOUT BRACKET TEMPLATE
-  // Includes 'home' and 'away' tags so manual testing works instantly!
-  // ==========================================
-
-  // Round of 32 (+2 pts bonus per win)
-  'ko-r32-1': { home: 'RSA', away: 'CAN', homeScore: 1, awayScore: 0 }, // RSA vs CAN (Runner-up Grp A vs Runner-up Grp B)
-  'ko-r32-2': { home: 'GER', away: 'BIH', homeScore: null, awayScore: null }, // GER vs BIH (Winner Grp E vs 3rd Place Grp B)
-  'ko-r32-3': { home: 'NED', away: 'MAR', homeScore: null, awayScore: null }, // NED vs MAR (Winner Grp F vs Runner-up Grp C)
-  'ko-r32-4': { home: 'BRA', away: 'JPN', homeScore: null, awayScore: null }, // BRA vs JPN (Winner Grp C vs Runner-up Grp F)
-  'ko-r32-5': { home: 'FRA', away: 'PAR', homeScore: null, awayScore: null }, // FRA vs PAR (Winner Grp I vs 3rd Place Grp D)
-  'ko-r32-6': { home: 'CIV', away: 'NOR', homeScore: null, awayScore: null }, // CIV vs NOR (Runner-up Grp E vs Runner-up Grp I)
-  'ko-r32-7': { home: 'MEX', away: 'SWE', homeScore: null, awayScore: null }, // MEX vs SWE (Winner Grp A vs 3rd Place Grp F)
-  'ko-r32-8': { home: 'ENG', away: 'SEN', homeScore: null, awayScore: null }, // ENG vs SEN (Winner Grp L vs 3rd Place Grp I)
-  'ko-r32-9': { home: 'USA', away: 'ECU', homeScore: null, awayScore: null }, // USA vs ECU (Winner Grp D vs 3rd Place Grp E)
-  'ko-r32-10': { home: 'BEL', away: 'IRN', homeScore: null, awayScore: null }, // BEL vs IRN (Winner Grp G vs 3rd Place Grp G)
-  'ko-r32-11': { home: 'POR', away: 'GHA', homeScore: null, awayScore: null }, // POR vs GHA (Runner-up Grp K vs Runner-up Grp L)
-  'ko-r32-12': { home: 'ESP', away: 'AUT', homeScore: null, awayScore: null }, // ESP vs AUT (Winner Grp H vs Runner-up Grp J)
-  'ko-r32-13': { home: 'SUI', away: 'HTI', homeScore: null, awayScore: null }, // SUI vs HTI (Winner Grp B vs 3rd Place Grp C)
-  'ko-r32-14': { home: 'ARG', away: 'CPV', homeScore: null, awayScore: null }, // ARG vs CPV (Winner Grp J vs Runner-up Grp H)
-  'ko-r32-15': { home: 'COL', away: 'CRO', homeScore: null, awayScore: null }, // COL vs CRO (Winner Grp K vs 3rd Place Grp L)
-  'ko-r32-16': { home: 'AUS', away: 'EGY', homeScore: null, awayScore: null }, // AUS vs EGY (Runner-up Grp D vs Runner-up Grp G)
-
-  // Round of 16 (+4 pts bonus)
-  'ko-r16-1': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-2 vs Winner r32-5
-  'ko-r16-2': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-1 vs Winner r32-3
-  'ko-r16-3': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-4 vs Winner r32-6
-  'ko-r16-4': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-7 vs Winner r32-8
-  'ko-r16-5': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-11 vs Winner r32-12
-  'ko-r16-6': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-9 vs Winner r32-10
-  'ko-r16-7': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-14 vs Winner r32-16
-  'ko-r16-8': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r32-13 vs Winner r32-15
-
-  // Quarterfinals (+6 pts bonus)
-  'ko-qf-1': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-1 vs Winner r16-2
-  'ko-qf-2': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-5 vs Winner r16-6
-  'ko-qf-3': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-3 vs Winner r16-4
-  'ko-qf-4': { home: null, away: null, homeScore: null, awayScore: null }, // Winner r16-7 vs Winner r16-8
-
-  // Semifinals (+9 pts bonus)
-  'ko-sf-1': { home: null, away: null, homeScore: null, awayScore: null }, // Winner qf-1 vs Winner qf-2
-  'ko-sf-2': { home: null, away: null, homeScore: null, awayScore: null }, // Winner qf-3 vs Winner qf-4
-
-  // Bronze Final / 3rd Place Playoff
-  'ko-3rd': { home: null, away: null, homeScore: null, awayScore: null }, // Loser sf-1 vs Loser sf-2
-
-  // Grand Final (+15 pts to Winner, +12 pts to Runner Up)
-  'ko-final': { home: null, away: null, homeScore: null, awayScore: null } // Winner sf-1 vs Winner sf-2
 };
 
 // Set this to true to use hardcoded scores, false to use API data
