@@ -83,7 +83,7 @@ function renderBracket() {
     }
   }
 
-  // Strictly isolates your custom bracket and completely drops the duplicate API one
+  // Strictly isolates your custom bracket and drops the duplicate API one
   const knockout = customKnockout.length > 0 
     ? customKnockout 
     : state.matches.filter((m) => m.stage !== 'group');
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderNav('bracket');
   renderBracket();
   
-  // FIX: Only let the live API auto-sync if you aren't using hardcoded custom scores!
+  // Only let the live API auto-sync if you aren't using hardcoded custom scores!
   if (typeof HARDCODED_MATCH_SCORES === 'undefined') {
     startAutoSync();
     document.addEventListener('wc-sync-complete', renderBracket);
