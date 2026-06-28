@@ -81,7 +81,7 @@ const HARDCODED_MATCH_SCORES = {
   'g-J-0-1': { homeScore: 3, awayScore: 1 }, // AUT vs JOR
   'g-J-1-0': { homeScore: 2, awayScore: 0 }, // ARG vs AUT
   'g-J-1-1': { homeScore: 2, awayScore: 1 }, // ALG vs JOR
-  'g-J-2-0': { homeScore: 1, awayScore: 3 }, // JOR vs ARG
+  'g-J-2-0': { homeScore: 3, awayScore: 1 }, // ARG vs JOR
   'g-J-2-1': { homeScore: 3, awayScore: 3 }, // ALG vs AUT
 
   // Group K (POR, COL, UZB, COD)
