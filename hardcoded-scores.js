@@ -106,7 +106,7 @@ const HARDCODED_MATCH_SCORES = {
   // ==========================================
 
   // Round of 32 (June 28 – July 3, 2026)
-  'ko-r32-1': { stage: 'r32', date: '2026-06-28 16:00', home: 'RSA', away: 'CAN', homeScore: null, awayScore: null },
+  'ko-r32-1': { stage: 'r32', date: '2026-06-28 16:00', home: 'RSA', away: 'CAN', homeScore: 1, awayScore: 0 },
   'ko-r32-2': { stage: 'r32', date: '2026-06-28 19:00', home: 'MEX', away: 'SUI', homeScore: null, awayScore: null },
   'ko-r32-3': { stage: 'r32', date: '2026-06-29 16:00', home: 'BRA', away: 'JPN', homeScore: null, awayScore: null },
   'ko-r32-4': { stage: 'r32', date: '2026-06-29 19:00', home: 'USA', away: 'MAR', homeScore: null, awayScore: null },
