@@ -10,7 +10,6 @@ function getLocalDateString() {
 
 function matchLocalDate(m) {
   if (!m || !m.date) return '9999-12-31';
-  // Extracts just the YYYY-MM-DD part safely
   return String(m.date).split('T')[0].split(' ')[0];
 }
 
@@ -34,12 +33,11 @@ function formatDate(dateStr) {
 function formatMatchDateTime(m) {
   if (!m || !m.date) return 'TBD';
   
-  // Safely normalize spaces to ISO 'T' format for mobile/Safari compatibility
+  // Safely normalize spaces to ISO 'T' format for cross-browser compatibility
   const normalizedDate = String(m.date).trim().replace(' ', 'T');
   const d = new Date(normalizedDate);
   
   if (isNaN(d.getTime())) {
-    // Fallback: If browser still fails, just print the raw date
     return String(m.date).replace('T', ' ');
   }
 
@@ -61,7 +59,6 @@ function renderTeamCell(code) {
     return `<span class="team-unknown">TBD</span>`;
   }
   
-  // Lookup team data from data.js
   let team = null;
   if (typeof ALL_TEAMS !== 'undefined') {
     team = ALL_TEAMS.find(t => t.code === code);
@@ -98,7 +95,6 @@ function showToast(message) {
 function requireSetup(pageKey) {
   const state = typeof loadState === 'function' ? loadState() : null;
   if (!state || !state.setupComplete) {
-    // If not set up, gently redirect
     if (pageKey !== 'index') {
       window.location.href = 'index.html';
       return false;
