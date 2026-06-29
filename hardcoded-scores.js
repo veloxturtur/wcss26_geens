@@ -106,45 +106,45 @@ const HARDCODED_MATCH_SCORES = {
   // ==========================================
 
   // Round of 32 (June 28 – July 3, 2026)
-  'ko-r32-1': { stage: 'r32', date: '29/06/26', home: 'CAN', away: 'RSA', homeScore: 1, awayScore: 0 },
-  'ko-r32-2': { stage: 'r32', date: '29-06-26', home: 'NED', away: 'MAR', homeScore: 2, awayScore: 1 },
-  'ko-r32-3': { stage: 'r32', date: '26-06-29', home: 'GER', away: 'PAR', homeScore: null, awayScore: null },
-  'ko-r32-4': { stage: 'r32', date: '26-06-29', home: 'FRA', away: 'SWE', homeScore: null, awayScore: null },
-  'ko-r32-5': { stage: 'r32', date: '2026-06-29T22:00', home: 'BEL', away: 'SEN', homeScore: null, awayScore: null },
-  'ko-r32-6': { stage: 'r32', date: '2026-06-30T16:00', home: 'USA', away: 'BIH', homeScore: null, awayScore: null },
-  'ko-r32-7': { stage: 'r32', date: '2026-06-30T19:00', home: 'ESP', away: 'AUS', homeScore: null, awayScore: null },
-  'ko-r32-8': { stage: 'r32', date: '2026-06-30T22:00', home: 'POR', away: 'CRO', homeScore: null, awayScore: null },
-  'ko-r32-9': { stage: 'r32', date: '2026-07-01T16:00', home: 'BRA', away: 'JPN', homeScore: null, awayScore: null },
-  'ko-r32-10': { stage: 'r32', date: '2026-07-01T19:00', home: 'CIV', away: 'NOR', homeScore: null, awayScore: null },
-  'ko-r32-11': { stage: 'r32', date: '2026-07-01T22:00', home: 'MEX', away: 'ECU', homeScore: null, awayScore: null },
-  'ko-r32-12': { stage: 'r32', date: '2026-07-02T16:00', home: 'ENG', away: 'COD', homeScore: null, awayScore: null },
-  'ko-r32-13': { stage: 'r32', date: '2026-07-02T19:00', home: 'SUI', away: 'ALG', homeScore: null, awayScore: null },
-  'ko-r32-14': { stage: 'r32', date: '2026-07-02T22:00', home: 'COL', away: 'GHA', homeScore: null, awayScore: null },
-  'ko-r32-15': { stage: 'r32', date: '2026-07-03T16:00', home: 'AUS', away: 'EGY', homeScore: null, awayScore: null },
+  'ko-r32-1': { stage: 'r32', home: 'CAN', away: 'RSA', homeScore: 1, awayScore: 0 },
+  'ko-r32-2': { stage: 'r32', home: 'NED', away: 'MAR', homeScore: null, awayScore: null },
+  'ko-r32-3': { stage: 'r32', home: 'GER', away: 'PAR', homeScore: null, awayScore: null },
+  'ko-r32-4': { stage: 'r32', home: 'FRA', away: 'SWE', homeScore: null, awayScore: null },
+  'ko-r32-5': { stage: 'r32', home: 'BEL', away: 'SEN', homeScore: null, awayScore: null },
+  'ko-r32-6': { stage: 'r32', home: 'USA', away: 'BIH', homeScore: null, awayScore: null },
+  'ko-r32-7': { stage: 'r32', home: 'ESP', away: 'AUS', homeScore: null, awayScore: null },
+  'ko-r32-8': { stage: 'r32' home: 'POR', away: 'CRO', homeScore: null, awayScore: null },
+  'ko-r32-9': { stage: 'r32', home: 'BRA', away: 'JPN', homeScore: 2, awayScore: 1 },
+  'ko-r32-10': { stage: 'r32', home: 'CIV', away: 'NOR', homeScore: null, awayScore: null },
+  'ko-r32-11': { stage: 'r32', home: 'MEX', away: 'ECU', homeScore: null, awayScore: null },
+  'ko-r32-12': { stage: 'r32', home: 'ENG', away: 'COD', homeScore: null, awayScore: null },
+  'ko-r32-13': { stage: 'r32', home: 'SUI', away: 'ALG', homeScore: null, awayScore: null },
+  'ko-r32-14': { stage: 'r32', home: 'COL', away: 'GHA', homeScore: null, awayScore: null },
+  'ko-r32-15': { stage: 'r32', home: 'AUS', away: 'EGY', homeScore: null, awayScore: null },
   'ko-r32-16': { stage: 'r32', home: 'ARG', away: 'CPV', homeScore: null, awayScore: null },
 
   // Round of 16 (July 4 – July 7, 2026)
-  'ko-r16-1': { stage: 'r16', date: '2026-07-04T19:00', home: 'CAN', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-r16-2': { stage: 'r16', date: '2026-07-04T22:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-r16-3': { stage: 'r16', date: '2026-07-05T19:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-r16-4': { stage: 'r16', date: '2026-07-05T22:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-r16-5': { stage: 'r16', date: '2026-07-06T19:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-r16-6': { stage: 'r16', date: '2026-07-06T22:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-r16-7': { stage: 'r16', date: '2026-07-07T19:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-r16-8': { stage: 'r16', date: '2026-07-07T22:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-1': { stage: 'r16', home: 'CAN', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-2': { stage: 'r16', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-3': { stage: 'r16', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-4': { stage: 'r16', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-5': { stage: 'r16', home: 'BRA', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-6': { stage: 'r16', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-7': { stage: 'r16', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-r16-8': { stage: 'r16', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
 
   // Quarterfinals (July 9 – July 10, 2026)
-  'ko-qf-1': { stage: 'qf', date: '2026-07-09T19:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-qf-2': { stage: 'qf', date: '2026-07-09T22:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-qf-3': { stage: 'qf', date: '2026-07-10T19:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-qf-4': { stage: 'qf', date: '2026-07-10T22:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-qf-1': { stage: 'qf', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-qf-2': { stage: 'qf', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-qf-3': { stage: 'qf', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-qf-4': { stage: 'qf', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
 
   // Semifinals (July 14 – July 15, 2026)
-  'ko-sf-1': { stage: 'sf', date: '2026-07-14T20:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
-  'ko-sf-2': { stage: 'sf', date: '2026-07-15T20:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-sf-1': { stage: 'sf', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
+  'ko-sf-2': { stage: 'sf', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null },
 
   // Grand Final (July 19, 2026)
-  'ko-final': { stage: 'final', date: '2026-07-19T22:00', home: 'TBD', away: 'TBD', homeScore: null, awayScore: null }
+  'ko-final': { stage: 'final', date: home: 'TBD', away: 'TBD', homeScore: null, awayScore: null }
 };
 
 // Set this to true to use hardcoded scores, false to use API data
