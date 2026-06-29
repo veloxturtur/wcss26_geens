@@ -121,7 +121,7 @@ const HARDCODED_MATCH_SCORES = {
   'ko-r32-13': { stage: 'r32', home: 'SUI', away: 'ALG', homeScore: null, awayScore: null },
   'ko-r32-14': { stage: 'r32', home: 'COL', away: 'GHA', homeScore: null, awayScore: null },
   'ko-r32-15': { stage: 'r32', home: 'AUS', away: 'EGY', homeScore: null, awayScore: null },
-  'ko-r32-16': { stage: 'r32', home: 'ARG', away: 'CPV', homeScore: null, awayScore: null },
+  'ko-r32-16': { stage: 'r32', date: '2026-06-29T22:00', home: 'ARG', away: 'CPV', homeScore: null, awayScore: null },
 
   // Round of 16 (July 4 – July 7, 2026)
   'ko-r16-1': { stage: 'r16', home: 'CAN', away: 'TBD', homeScore: null, awayScore: null },
