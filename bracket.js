@@ -1,124 +1,116 @@
-const BRACKET_ROUNDS = [
-  { key: 'r32', label: 'Round of 32' },
-  { key: 'r16', label: 'Round of 16' },
-  { key: 'qf', label: 'Quarter-finals' },
-  { key: 'sf', label: 'Semi-finals' },
-  { key: 'final', label: 'Final' },
-];
+// HELPER FUNCTIONS FOR DATE AND TIME FORMATTING
 
-function renderBracketTeam(m, side) {
-  const code = side === 'home' ? m.home : m.away;
-  const slot = side === 'home' ? m.homeSlot : m.awaySlot;
-  if (code && code !== 'TBD' && code !== 'null') return renderTeamCell(code);
-  const label = slot ? knockoutSlotLabel(slot) : null;
-  if (label) {
-    return `<span class="team-unknown">TBD <span class="bracket-slot">(${label})</span></span>`;
-  }
-  return '<span class="team-unknown">TBD</span>';
+function getLocalDateString() {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
-function renderBracketMatch(m) {
-  const home = renderBracketTeam(m, 'home');
-  const away = renderBracketTeam(m, 'away');
-  const score =
-    matchPlayed(m) && m.homeScore != null
-      ? `<div class="bracket-score">${m.homeScore} – ${m.awayScore}</div>`
-      : '';
-  const winner =
-    matchPlayed(m) && m.homeScore !== m.awayScore
-      ? m.homeScore > m.awayScore
-        ? m.home
-        : m.away
-      : null;
+function matchLocalDate(m) {
+  if (!m || !m.date) return '9999-12-31';
+  // Extracts just the YYYY-MM-DD part safely
+  return String(m.date).split('T')[0].split(' ')[0];
+}
 
-  let dateStr = '';
-  try {
-    dateStr = typeof formatMatchDateTime === 'function' ? formatMatchDateTime(m) : (m.date || '');
-  } catch {
-    dateStr = m.date || '';
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const cleanDate = String(dateStr).split('T')[0].split(' ')[0];
+  const parts = cleanDate.split('-');
+  if (parts.length !== 3) return dateStr;
+  
+  const [year, month, day] = parts;
+  const d = new Date(year, month - 1, day);
+  if (isNaN(d.getTime())) return dateStr;
+
+  return d.toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short'
+  });
+}
+
+function formatMatchDateTime(m) {
+  if (!m || !m.date) return 'TBD';
+  
+  // Safely normalize spaces to ISO 'T' format for cross-browser compatibility
+  const normalizedDate = String(m.date).trim().replace(' ', 'T');
+  const d = new Date(normalizedDate);
+  
+  if (isNaN(d.getTime())) {
+    // Fallback: If browser still fails, print the clean raw date
+    return String(m.date).replace('T', ' ');
   }
+
+  const datePart = d.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short'
+  });
+
+  const timePart = d.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  return `${datePart} • ${timePart}`;
+}
+
+function renderTeamCell(code) {
+  if (!code || code === 'TBD' || code === 'null') {
+    return `<span class="team-unknown">TBD</span>`;
+  }
+  
+  let team = null;
+  if (typeof ALL_TEAMS !== 'undefined') {
+    team = ALL_TEAMS.find(t => t.code === code);
+  }
+
+  const name = team ? team.name : code;
+  const flag = team && team.flag ? team.flag : '🏳️';
 
   return `
-    <div class="bracket-match ${winner ? 'bracket-match-done' : ''}">
-      <div class="bracket-team ${winner === m.home ? 'bracket-winner' : ''}">${home}</div>
-      ${score}
-      <div class="bracket-team ${winner === m.away ? 'bracket-winner' : ''}">${away}</div>
-      <div class="bracket-date">${dateStr}</div>
-    </div>`;
+    <span class="team-cell">
+      <span class="team-flag" role="img" aria-label="${name} flag">${flag}</span>
+      <span class="team-name">${name}</span>
+    </span>
+  `;
 }
 
-function renderBracket() {
-  const state = loadState();
-  const wrap = document.getElementById('knockout-bracket');
-  if (!wrap) return;
+function showToast(message) {
+  let toast = document.getElementById('toast-notification');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-notification';
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  
+  toast.textContent = message;
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
 
-  const customKnockout = [];
-
-  if (typeof HARDCODED_MATCH_SCORES !== 'undefined') {
-    for (const [id, data] of Object.entries(HARDCODED_MATCH_SCORES)) {
-      if (!id.startsWith('g-') && !id.includes('3rd')) {
-        let stg = 'r32';
-        if (id.includes('r16')) stg = 'r16';
-        else if (id.includes('qf')) stg = 'qf';
-        else if (id.includes('sf')) stg = 'sf';
-        else if (id.includes('final') || id.includes('Final')) stg = 'final';
-
-        const man = state.manualScores?.[id] || {};
-        const hs = man.homeScore !== undefined ? man.homeScore : data.homeScore;
-        const as = man.awayScore !== undefined ? man.awayScore : data.awayScore;
-
-        customKnockout.push({
-          id,
-          stage: stg,
-          home: data.home || null,
-          away: data.away || null,
-          homeSlot: data.homeSlot || null,
-          awaySlot: data.awaySlot || null,
-          homeScore: hs,
-          awayScore: as,
-          date: data.date || '2026-06-28',
-          matchNum: parseInt(id.replace(/\D/g, ''), 10) || 0
-        });
-      }
+function requireSetup(pageKey) {
+  const state = typeof loadState === 'function' ? loadState() : null;
+  if (!state || !state.setupComplete) {
+    if (pageKey !== 'index') {
+      window.location.href = 'index.html';
+      return false;
     }
   }
-
-  // Strictly isolates your custom bracket and drops the duplicate API one
-  const knockout = customKnockout.length > 0 
-    ? customKnockout 
-    : state.matches.filter((m) => m.stage !== 'group');
-
-  const byStage = {};
-  for (const r of BRACKET_ROUNDS) byStage[r.key] = [];
-  for (const m of knockout) {
-    if (byStage[m.stage]) byStage[m.stage].push(m);
-  }
-
-  wrap.innerHTML = BRACKET_ROUNDS.map((round) => {
-    const matches = (byStage[round.key] || []).sort(
-      (a, b) => (a.matchNum || 0) - (b.matchNum || 0)
-    );
-    return `
-      <div class="bracket-round">
-        <h3 class="bracket-round-title">${round.label}</h3>
-        <div class="bracket-round-matches">
-          ${matches.length ? matches.map(renderBracketMatch).join('') : '<p class="empty-cell">TBD</p>'}
-        </div>
-      </div>`;
-  }).join('');
-
-  const syncEl = document.getElementById('sync-status');
-  if (syncEl) syncEl.textContent = formatSyncStatus(state);
+  return true;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (!requireSetup('bracket')) return;
-  renderNav('bracket');
-  renderBracket();
+function formatSyncStatus(state) {
+  if (!state || !state.lastSyncAt) return 'Using manual simulation data';
   
-  // Only let the live API auto-sync if you aren't using hardcoded custom scores!
-  if (typeof HARDCODED_MATCH_SCORES === 'undefined') {
-    startAutoSync();
-    document.addEventListener('wc-sync-complete', renderBracket);
-  }
-});
+  const d = new Date(state.lastSyncAt);
+  if (isNaN(d.getTime())) return 'Live API connected';
+  
+  const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  return `Last synced: Today at ${timeStr}`;
+}
