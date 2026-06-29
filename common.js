@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { href: 'rankings.html', label: 'National Teams', icon: '🚩', page: 'rankings' },
   { href: 'everyone.html', label: "Everyone's Teams", icon: '👥', page: 'everyone' },
   { href: 'table.html', label: 'World Cup Table', icon: '📊', page: 'table' },
+  { href: 'challenge.html', label: 'Team Challenge', icon: '⚔️', page: 'challenge' },
 ];
 
 const KNOCKOUT_STAGE_LABELS = {
@@ -50,12 +51,23 @@ function requireSetup(page) {
   return true;
 }
 
+// Silent date formatter — stops "Invalid Date" errors on knockout brackets
+function formatMatchDateTime(m) {
+  if (!m || !m.date) return '';
+  const d = new Date(m.date);
+  if (isNaN(d.getTime())) return ''; 
+  
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + ' • ' + 
+         d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+}
+
 function renderTeamCell(code) {
-  const team = getTeamByCode(code);
+  const team = typeof getTeamByCode === 'function' ? getTeamByCode(code) : null;
   if (!team) return `<span class="team-unknown">TBD</span>`;
+  const flag = typeof renderFlag === 'function' ? renderFlag(code) : '🏳️';
   return `
     <span class="team-cell">
-      ${renderFlag(code)}
+      ${flag}
       <span class="team-name">${team.name}</span>
     </span>`;
 }
@@ -66,11 +78,12 @@ function renderTeamsCell(codes) {
 }
 
 function renderLockedTeamChip(code) {
-  const team = getTeamByCode(code);
+  const team = typeof getTeamByCode === 'function' ? getTeamByCode(code) : null;
+  const flag = typeof renderFlag === 'function' ? renderFlag(code, 32) : '🏳️';
   const adminHint = 'Locked — cannot be changed';
   return `
     <span class="team-locked-chip" data-code="${code}">
-      ${renderFlag(code, 32)}
+      ${flag}
       <span>${team?.name || 'Unknown'}</span>
       <span class="lock-icon" title="${adminHint}">🔒</span>
     </span>`;
@@ -134,7 +147,7 @@ function closePlayerProfile() {
 
 function openPlayerProfile(playerName) {
   const state = loadState();
-  const profile = getPlayerProfile(state, playerName);
+  const profile = typeof getPlayerProfile === 'function' ? getPlayerProfile(state, playerName) : null;
   if (!profile) {
     showToast('Player not found.', 'error');
     return;
@@ -204,7 +217,7 @@ function initPageUi() {
 
 function teamOptionsHtml(selected = '', includeEmpty = true) {
   const picked = getGloballyPickedTeams();
-  const codes = [...ALL_TEAMS].sort((a, b) => a.name.localeCompare(b.name));
+  const codes = typeof ALL_TEAMS !== 'undefined' ? [...ALL_TEAMS].sort((a, b) => a.name.localeCompare(b.name)) : [];
   let html = includeEmpty ? '<option value="">— Select team —</option>' : '';
   html += codes
     .map((t) => {
