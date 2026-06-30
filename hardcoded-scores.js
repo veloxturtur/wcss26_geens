@@ -172,7 +172,7 @@ const MANUAL_KNOCKOUT_OVERRIDES = {
  'MAR': 'r16',
  'GER': 'r32',
   // 'AUS': 'r32',
- 'NED': 'r16',
+ 'NED': 'r32',
   // 'CIV': 'r32',
   // 'BEL': 'r32',
   // 'SWE': 'r32',
