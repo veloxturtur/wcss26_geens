@@ -153,11 +153,45 @@ const USE_HARDCODED_SCORES = true;
 // ==========================================
 // MANUAL KNOCKOUT POINT OVERRIDES
 // Force the leaderboard to give a team points for reaching a specific stage.
-// Use this if penalty shootouts or TBD bracket math gets confused.
 // Stages: 'r32', 'r16', 'qf', 'sf', 'runnerUp', 'final'
+//
+// HOW TO USE THIS:
+// - To award points, remove the "//" from the start of the line.
+// - To upgrade a team, change 'r32' to 'r16', 'qf', etc.
+// - Make sure every active line ends with a comma!
 // ==========================================
 
 const MANUAL_KNOCKOUT_OVERRIDES = {
-'PAR': 'r16',
-'MAR': 'r16'
+ 'RSA': 'r32',
+ 'CAN': 'r16',
+  // 'MEX': 'r32',
+  // 'SUI': 'r32',
+ 'BRA': 'r16',
+ 'JPN': 'r32',
+  // 'USA': 'r32',
+ 'MAR': 'r16',
+ 'GER': 'r32',
+  // 'AUS': 'r32',
+ 'NED': 'r16',
+  // 'CIV': 'r32',
+  // 'BEL': 'r32',
+  // 'SWE': 'r32',
+  // 'ESP': 'r32',
+  // 'EGY': 'r32',
+  // 'FRA': 'r32',
+  // 'CPV': 'r32',
+  // 'ARG': 'r32',
+  // 'NOR': 'r32',
+  // 'POR': 'r32',
+  // 'ALG': 'r32',
+  // 'ENG': 'r32',
+  // 'COL': 'r32',
+  // 'SEN': 'r32',
+  // 'AUT': 'r32',
+  // 'URU': 'r32',
+  // 'SCO': 'r32',
+  // 'KOR': 'r32',
+ 'PAR': 'r16',
+  // 'CRO': 'r32',
+  // 'TUN': 'r32'
 };
