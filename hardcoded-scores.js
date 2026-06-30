@@ -149,3 +149,15 @@ const HARDCODED_MATCH_SCORES = {
 
 // Set this to true to use hardcoded scores, false to use API data
 const USE_HARDCODED_SCORES = true;
+
+// ==========================================
+// MANUAL KNOCKOUT POINT OVERRIDES
+// Force the leaderboard to give a team points for reaching a specific stage.
+// Use this if penalty shootouts or TBD bracket math gets confused.
+// Stages: 'r32', 'r16', 'qf', 'sf', 'runnerUp', 'final'
+// ==========================================
+
+const MANUAL_KNOCKOUT_OVERRIDES = {
+  // Example: 'PAR': 'r16',
+  // Example: 'ENG': 'qf'
+};
