@@ -158,6 +158,6 @@ const USE_HARDCODED_SCORES = true;
 // ==========================================
 
 const MANUAL_KNOCKOUT_OVERRIDES = {
-  // Example: 'PAR': 'r16',
-  // Example: 'ENG': 'qf'
+'PAR': 'r16',
+'MAR': 'r16'
 };
