@@ -109,7 +109,7 @@ function getEffectiveMatches(rawMatches, manualScores = {}) {
           if (man.homeScore !== undefined && man.homeScore !== null) hs = man.homeScore;
           if (man.awayScore !== undefined && man.awayScore !== null) as = man.awayScore;
         }
-
+       
         let stg = hard.stage;
         if (!stg) {
           if (id.includes('r32')) stg = 'r32';
