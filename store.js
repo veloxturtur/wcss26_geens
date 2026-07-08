@@ -320,7 +320,7 @@ function getKnockoutReach(matches, knockoutTeams) {
       reach[code] = maxStage(reach[code] || 'group', stage);
     }
   }
-
+ 
   return reach;
 }
 
